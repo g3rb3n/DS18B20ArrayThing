@@ -16,45 +16,45 @@ BlinkPattern::Pattern<2> panic{{1,1},25};
 BlinkPattern::Pattern<2> start{{1,9},25};
 BlinkPattern::Pattern<2> normal{{1,39},25};
 
-void setup() 
+void setup()
 {
   Serial.begin(230400);
   Serial.println();
   Serial.println("Client:" + thing.clientId());
 
   led.setPattern(start);
-  
+
   thing.onStateChange([](const String& msg){
     Serial.println(msg);
   });
 
-  thing.addSensor(String("sensor/ds18b20/") + thing.clientId() + "/1", 5000, getValue1);
-  thing.addSensor(String("sensor/ds18b20/") + thing.clientId() + "/2", 5000, getValue2);
-  thing.addSensor(String("sensor/ds18b20/") + thing.clientId() + "/3", 5000, getValue3);
-  thing.addSensor(String("sensor/ds18b20/") + thing.clientId() + "/4", 5000, getValue4);
+  thing.begin();
 
-  if (!ds1.begin()) 
+  thing.addSensor(thing.clientId() + "/ds18b20/1/temperature", 5000, getValue1);
+  thing.addSensor(thing.clientId() + "/ds18b20/2/temperature", 5000, getValue2);
+  thing.addSensor(thing.clientId() + "/ds18b20/3/temperature", 5000, getValue3);
+  thing.addSensor(thing.clientId() + "/ds18b20/4/temperature", 5000, getValue4);
+
+  if (!ds1.begin())
   {
     Serial.println("Could not find DS18B20 sensor 1");
     led.setPattern(panic);
   }
-  if (!ds2.begin()) 
+  if (!ds2.begin())
   {
     Serial.println("Could not find DS18B20 sensor 2");
     led.setPattern(panic);
   }
-  if (!ds3.begin()) 
+  if (!ds3.begin())
   {
     Serial.println("Could not find DS18B20 sensor 3");
     led.setPattern(panic);
   }
-  if (!ds4.begin()) 
+  if (!ds4.begin())
   {
     Serial.println("Could not find DS18B20 sensor 4");
     led.setPattern(panic);
   }
-  
-  thing.begin();
 }
 
 void getValue1(Value& v)
