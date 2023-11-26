@@ -4,6 +4,7 @@
 #include <DS18B20.h>
 
 using namespace g3rb3n;
+using namespace ootb;
 
 Thing thing;
 BlinkPattern led(BUILTIN_LED);
@@ -30,10 +31,10 @@ void setup()
 
   thing.begin();
 
-  thing.addSensor(thing.clientId() + "/ds18b20/1/temperature", 5000, getValue1);
-  thing.addSensor(thing.clientId() + "/ds18b20/2/temperature", 5000, getValue2);
-  thing.addSensor(thing.clientId() + "/ds18b20/3/temperature", 5000, getValue3);
-  thing.addSensor(thing.clientId() + "/ds18b20/4/temperature", 5000, getValue4);
+  thing.addSensor("things/" + thing.clientId() + "/ds18b20/1/temperature", 5000, getValue1);
+  thing.addSensor("things/" + thing.clientId() + "/ds18b20/2/temperature", 5000, getValue2);
+  thing.addSensor("things/" + thing.clientId() + "/ds18b20/3/temperature", 5000, getValue3);
+  thing.addSensor("things/" + thing.clientId() + "/ds18b20/4/temperature", 5000, getValue4);
 
   if (!ds1.begin())
   {
